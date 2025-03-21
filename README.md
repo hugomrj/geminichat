@@ -59,3 +59,27 @@ http://localhost:5000/chat
 ```
 
 
+## Obtener API Key de Google AI Studio
+
+Para utilizar la API de Google AI en este proyecto, necesitas obtener una clave de API desde Google AI Studio.
+
+### Pasos para obtener tu API Key:
+
+1. Dirígete a [Google AI Studio](https://aistudio.google.com/).
+2. Inicia sesión con tu cuenta de Google o crea una nueva cuenta si aún no tienes una.
+3. Una vez dentro, navega hasta la sección de **API Keys**.
+4. Crea un nuevo proyecto y genera una nueva API Key.
+5. Copia la clave generada.
+
+### Configuración de la API Key en el proyecto:
+
+1. Dentro de la carpeta de tu proyecto `geminichat/app/gemini`, localiza el archivo `api_key.py`.
+2. Abre el archivo `api_key.py` y coloca la API Key obtenida en la siguiente línea:
+
+```python
+# api_key.py
+
+API_KEY = 'tu-api-key-aqui'
+
+
+
