@@ -1,1 +1,1 @@
-API_KEY = "api de google studio ia"
+API_KEY = ""
