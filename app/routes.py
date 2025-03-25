@@ -36,7 +36,7 @@ def configure_routes(app):
 
 
     # Ruta para procesar las preguntas (POST)
-    @app.route('/pregunta_ia', methods=['POST'])
+    @app.route('/chat/pregunta_ia', methods=['POST'])
     def pregunta_ia():
         # Obtener los datos en formato JSON
         data = request.get_json()
@@ -61,6 +61,6 @@ def configure_routes(app):
 
 
     # Nueva ruta para verificar el estado del servicio (GET)
-    @app.route('/status', methods=['GET'])
+    @app.route('/chat/status', methods=['GET'])
     def status():
         return jsonify({'status': 'Servicio en línea', 'message': 'Todo está funcionando correctamente.'})
