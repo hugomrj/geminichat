@@ -34,6 +34,7 @@ def configure_routes(app):
 
 
 
+
     # Ruta para procesar las preguntas (POST)
     @app.route('/pregunta_ia', methods=['POST'])
     def pregunta_ia():
@@ -54,6 +55,8 @@ def configure_routes(app):
         
         # Retornar la respuesta generada en formato JSON
         return jsonify({'respuesta': respuesta}), 200
+
+
 
 
 
