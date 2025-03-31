@@ -33,6 +33,8 @@ def generar_respuesta(pregunta: str) -> str:
 
 
 
+
+
 if __name__ == "__main__":
     # Verifica si se proporcionó un argumento de línea de comandos
     if len(sys.argv) > 1:

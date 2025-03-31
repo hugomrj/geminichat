@@ -1,1 +1,1 @@
-API_KEY = "obtener su api key em google studio IA"
+API_KEY = "secret"

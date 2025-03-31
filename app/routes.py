@@ -1,7 +1,11 @@
 
 from flask import  jsonify, request,  render_template
 
+from app.gemini.bonsaiki_ia import generate
 from app.gemini.cliente_ia import generar_respuesta
+from app.gemini.contexto import generar_pregunta
+
+
 
 
 
@@ -23,10 +27,21 @@ def configure_routes(app):
         if 'pregunta' not in data:
             return jsonify({'error': 'Pregunta no proporcionada'}), 400
         
-        pregunta = data['pregunta']
-        respuesta = generar_respuesta(pregunta)
+        pregunta = data.get('pregunta', '')
+        # respuesta = generate(pregunta)
+
+        historial = data.get('historial', []) # Obtener el historial
+
+        pregunta = generar_pregunta(pregunta, historial)
+
+        print(pregunta)
+
+        respuesta = generate(pregunta)
         
         return jsonify({'respuesta': respuesta})    
+
+
+
 
 
 
