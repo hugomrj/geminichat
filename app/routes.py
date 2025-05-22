@@ -77,7 +77,7 @@ def configure_routes(app):
 
 
 
-    @app.route('/webhook', methods=['POST'])
+    @app.route('/chat/webhook', methods=['POST'])
     def handle_telegram():
         try:
             # 1. Obtener datos del mensaje
