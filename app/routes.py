@@ -77,7 +77,7 @@ def configure_routes(app):
 
 
 
-    @app.route('/chat/webhook', methods=['POST'])
+    @app.route('/chatwebhook', methods=['POST'])
     def handle_telegram():
         try:
             # 1. Obtener datos del mensaje
@@ -91,7 +91,16 @@ def configure_routes(app):
                 return jsonify({'status': 'ignored'}), 200
 
             # 3. Generar respuesta con tu IA (Gemini)
+
             respuesta = generar_respuesta(text)
+
+            # historial = data.get('historial', []) # Obtener el historial
+            # pregunta = generar_pregunta(pregunta, historial)
+
+ 
+            pregunta = generar_pregunta(pregunta,  [])
+            respuesta = generate(pregunta)
+
 
             # 4. Enviar respuesta a Telegram
             requests.post(

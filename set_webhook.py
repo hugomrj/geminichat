@@ -2,13 +2,16 @@
 import requests
 from app.gemini.telegran_key import TELEGRAM_TOKEN  # Importas tu token como lo tienes actualmente
 
-# Configuración
-WEBHOOK_URL = "https://tudominio.com/webhook"  # Reemplaza con tu dominio real
-DROP_PENDING_UPDATES = True  # Borra mensajes pendientes no procesados
+
+
+
+# Configuración con tu dominio real
+WEBHOOK_URL = "https://bonsaiki.duckdns.org/chat/webhook"
+DROP_PENDING_UPDATES = True
 
 def set_webhook():
     try:
-        print("🔄 Configurando webhook...")
+        print("🔄 Configurando webhook sin token secreto...")
         
         response = requests.post(
             f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/setWebhook",
@@ -23,7 +26,6 @@ def set_webhook():
         if result.get('ok'):
             print("✅ Webhook configurado correctamente")
             print(f"🔗 URL: {WEBHOOK_URL}")
-            print(f"ℹ️ Info: {result}")
         else:
             print("❌ Error al configurar webhook:")
             print(result)
@@ -33,14 +35,18 @@ def set_webhook():
 
 def check_webhook():
     try:
-        print("\n🔍 Verificando configuración actual...")
+        print("\n🔍 Verificando webhook...")
         response = requests.get(
             f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/getWebhookInfo",
             timeout=5
         )
-        print(response.json())
+        info = response.json()
+        
+        print(f"URL actual: {info.get('result', {}).get('url')}")
+        print(f"Estado: {'Activo ✅' if info.get('result', {}).get('url') else 'Inactivo ❌'}")
+        
     except Exception as e:
-        print(f"⚠️ Error al verificar webhook: {str(e)}")
+        print(f"⚠️ Error al verificar: {str(e)}")
 
 if __name__ == "__main__":
     set_webhook()
