@@ -1,13 +1,16 @@
 
+from functools import wraps
+import os
 from flask import  jsonify, request,  render_template
+import requests
 
 from app.gemini.bonsaiki_ia import generate
 from app.gemini.cliente_ia import generar_respuesta
 from app.gemini.contexto import generar_pregunta
 
 
-
-
+from app.gemini.telegran_key import TELEGRAM_TOKEN
+TELEGRAM_API = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}"
 
 
 def configure_routes(app):
@@ -70,6 +73,40 @@ def configure_routes(app):
         
         # Retornar la respuesta generada en formato JSON
         return jsonify({'respuesta': respuesta}), 200
+
+
+
+
+    @app.route('/webhook', methods=['POST'])
+    def handle_telegram():
+        try:
+            # 1. Obtener datos del mensaje
+            data = request.get_json()
+            message = data.get('message', {})
+            chat_id = message.get('chat', {}).get('id')
+            text = message.get('text', '').strip()
+
+            # 2. Ignorar mensajes vacíos (fotos, stickers, etc.)
+            if not text:
+                return jsonify({'status': 'ignored'}), 200
+
+            # 3. Generar respuesta con tu IA (Gemini)
+            respuesta = generar_respuesta(text)
+
+            # 4. Enviar respuesta a Telegram
+            requests.post(
+                f"{TELEGRAM_API}/sendMessage",
+                json={
+                    'chat_id': chat_id,
+                    'text': respuesta
+                }
+            )
+            return jsonify({'status': 'success'}), 200
+
+        except Exception as e:
+            print(f"⚠️ Error: {str(e)}")  # Log simple (reemplázalo con tu sistema de logs)
+            return jsonify({'status': 'error'}), 500
+
 
 
 
