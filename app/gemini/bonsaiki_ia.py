@@ -6,9 +6,6 @@ from app.gemini.api_key import API_KEY
 
 
 
-print(API_KEY)  # Esto imprimirá la clave
-
-
 genai.configure(api_key=API_KEY)
 model = genai.GenerativeModel('gemini-2.0-flash-lite')
 

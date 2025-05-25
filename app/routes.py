@@ -9,6 +9,8 @@ from app.gemini.cliente_ia import generar_respuesta
 from app.gemini.contexto import generar_pregunta
 
 
+
+from app.gemini.contexto_nova import pregunta_con_contexto
 from app.gemini.telegran_key import TELEGRAM_TOKEN
 TELEGRAM_API = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}"
 
@@ -90,15 +92,18 @@ def configure_routes(app):
             if not text:
                 return jsonify({'status': 'ignored'}), 200
 
-            # 3. Generar respuesta con tu IA (Gemini)
-            respuesta = generar_respuesta(text)
+            
 
             # historial = data.get('historial', []) # Obtener el historial
             # pregunta = generar_pregunta(pregunta, historial)
 
+            historial = data.get('history', [])
+            contexto = pregunta_con_contexto(text, historial)
+            respuesta = generate(contexto)
+
  
-            pregunta = generar_pregunta(text,  [])
-            respuesta = generate(pregunta)
+            # pregunta = generar_pregunta(text,  [])
+            # respuesta = generate(pregunta)
 
 
             # 4. Enviar respuesta a Telegram
